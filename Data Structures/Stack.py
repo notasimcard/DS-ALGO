@@ -5,7 +5,7 @@ Implementation of stack in python:
         - use pop() to take element out of the list to remove elements in LIFO order
         - downsides:
             - The items are stored next to each other in memory, so if the stack grows bigger than the 
-                memory, then Python needs to do some memmory allocations
+                memory, then Python needs to do some memory allocations
             - List in python is implemented as dynamic array. So if the list gets full it needs to resize.
                 So, the O(1) complexity is not 100% consistent
         - benefits:
