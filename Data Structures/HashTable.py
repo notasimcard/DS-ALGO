@@ -105,9 +105,35 @@ class HashTableSeperateChaining:
                     print(f"{item.key} : {item.value}")
                 print("-----")
 
+
+class HashTableOpenAddressing:
+    def __init__(self, max_capacity=None):
+        if max_capacity is None:
+            self.capacity = 16
+        else:
+            self.capacity = max_capacity
+        self.hash_table = [None for _ in range(self.capacity)]
+        self.load_factor = 0.75
+        self.max_threshold = self.load_factor * self.capacity
+        self.current_threshold = 0
+
+    def _hash(self, key):
+        hash = 0
+        if key is None:
+            raise Exception("Null Key Error")
+
+        if type(key) is int:
+            hash = abs(key)
+        else:
+            for char in key:
+                hash += ord(char)
+        return hash % self.capacity
+
+
 hash_table = HashTableSeperateChaining(6)
 
-
+hash_table.insert("Jimi", "Hendrix")
+hash_table.insert("Jimis", "Hendrix")
 hash_table.insert("Jimi", "Hendrix")
 hash_table.insert("Glass", "Animals")
 hash_table.insert("Tame", "Impala")
