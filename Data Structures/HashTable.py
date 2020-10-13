@@ -11,17 +11,21 @@ class KeyValue:
 class HashTableSeperateChaining:
     # Initializing max capacity of Hash Table
     def __init__(self, max_capacity=None):
-        if max_capacity is None:
+        if max_capacity <= 0 or max_capacity >= float('inf') or type(max_capacity) != int:
+            raise Exception("Invalid capacity")
+
+        # If capacity is some low number like 1 or 2,we need to adress other edge cases
+        # I think initial size = 16 is a fair assumption for a hash table
+        if max_capacity is None or max_capacity  < 16:
             self.capacity = 16
         else:
-            if max_capacity < 0 or max_capacity > float('inf'):
-                raise Exception("Invalid capacity")
             self.capacity = max_capacity
 
         self.hash_table = [[] for _ in range(self.capacity)]
         self.load_factor = 0.75
         # Set a threshold  for resizing the hash table
-        self.max_threshold = int(self.capacity * self.load_factor)
+        self.max_threshold = max(1, int(self.load_factor * self.capacity))
+
         self.current_threshold = 0
 
     def _hash(self, key):
@@ -81,7 +85,7 @@ class HashTableSeperateChaining:
         print("Before resizing\n")
         self.print_table()
         self.capacity = 2 * self.capacity
-        self.max_threshold = self.capacity * self.load_factor
+        self.max_threshold = max(1, int(self.load_factor * self.capacity))
         new_hash_table = [[] for _ in range(self.capacity)]
         for bucket in self.hash_table:
             if len(bucket) > 0:
@@ -114,13 +118,18 @@ class HashTableOpenAddressing:
                 3. Double hashing
     """
     def __init__(self, max_capacity=None):
-        if max_capacity is None:
+        if max_capacity <= 0 or max_capacity >= float('inf') or type(max_capacity) != int:
+            raise Exception("Invalid capacity")
+
+        # If capacity is some low number like 1 or 2,we need to adress other edge cases
+        # I think initial size = 16 is a fair assumption for a hash table
+        if max_capacity is None or max_capacity < 16:
             self.capacity = 16
         else:
             self.capacity = max_capacity
         self.hash_table = [None for _ in range(self.capacity)]
         self.load_factor = 0.75
-        self.max_threshold = int(self.load_factor * self.capacity)
+        self.max_threshold = max(1, int(self.load_factor * self.capacity))
         self.current_threshold = 0
 
     def _hash(self, key):
@@ -171,7 +180,7 @@ class HashTableOpenAddressing:
         self.hash_table[new_hash] = key_value
         self.current_threshold += 1
         #  Check for threshold
-        if self.current_threshold == self.max_threshold:
+        if self.current_threshold >= self.max_threshold:
             self._resize_table()
         # return key
         return key
@@ -235,7 +244,7 @@ class HashTableOpenAddressing:
     def _resize_table(self):
         self.capacity = 2 * self.capacity
         self.current_threshold = 0
-        self.max_threshold = self.max_threshold * self.load_factor
+        self.max_threshold = max(1, int(self.max_threshold * self.load_factor))
         old_table = self.hash_table.copy()
         self.hash_table.clear()
         self.hash_table = [None for _ in range(self.capacity)]
@@ -244,7 +253,8 @@ class HashTableOpenAddressing:
                 self.insert(keyValue.key, keyValue.value)
 
 
-hash_table = HashTableOpenAddressing(6)
+# Driver Code
+hash_table = HashTableOpenAddressing(22020)
 
 hash_table.insert("Jimi", "Hendrix")
 hash_table.insert("Jimis", "Hendrix")
