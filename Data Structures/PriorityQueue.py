@@ -127,6 +127,16 @@ class PQ:
         self._bubble_up(len(self.heap) - 1)
 
 
+    def heapify(self, values):
+        # Using heapify to build a Prioirty queue from a list
+        # Time complexity will be O(n)
+        # Ignoring all leaf nodes, as leaf nodes are already 
+        self.heap = values
+        start = (len(values) - 1) // 2
+        while start >= 0 :
+            self._heapify_bubble_down(start)
+            start -= 1
+
     def peek(self):
         return self.heap[0]
 
@@ -231,8 +241,14 @@ class PQ:
                 return
 
 
+    def _heapify_bubble_down(self, index):
+        #TODO: Heapify
+        return
+
+
     def print_heap(self):
         print(self.heap)
+
 
     def print_map(self):
         self.value_map.print_table()
