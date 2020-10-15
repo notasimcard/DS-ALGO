@@ -89,10 +89,3 @@ class UnionFind:
             self.root_ids[p_root] = q_root
 
         self.comp_number -= 1
-
-lst = [1, 10, 100, 150]
-g = defaultdict(list)
-for i, l in enumerate(lst):
-    g[l].append(i)
-
-print(g[9])
