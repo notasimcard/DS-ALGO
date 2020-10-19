@@ -8,7 +8,6 @@ Uses:
     6. Treap
     7. Binary heaps, etc
 """
-#TODO: Binary Insertion
 #TODO: Binary Removal
     # Case 1: Node to remove is a leaf node
     # Case 2: Node to remove has only left subtree
@@ -16,12 +15,6 @@ Uses:
     # Case 4: Node to remove has both subtrees
         # I) Successor can be the largest value in the left subtree
         # II) or, Successor can be the smallest value in the right subtree
-#TODO Tree Traversals:
-    # Preorder
-    # Inorder : Increasing value order
-    # Postorder
-    # Level order (BFS)
-#TODO: Check if binary search tree is valid or not
 
 class Node:
     # Tree Node
@@ -71,6 +64,7 @@ class BST:
                 curr_node.count += 1
                 return
 
+
     def traversals(self, traverse="in_order"):
         if traverse == "in_order":
             return self.in_order(self.root)
@@ -84,31 +78,28 @@ class BST:
             return None
 
 
-    def in_order(self, node, res=[]):
+    def in_order(self, node):
         # left -> root -> right
         if node:
-            res = self.in_order(node.left , res)
-            res.append(f"{str(node.value)}({str(node.count)})")
-            res = self.in_order(node.right, res)
-        return res
+            self.in_order(node.left)
+            print(f"{str(node.value)}({str(node.count)})", end=" - ")
+            self.in_order(node.right)
 
 
-    def pre_order(self, node, res=[]):
+    def pre_order(self, node):
         # root -> left -> right
         if node:
-            res.append(f"{str(node.value)}({str(node.count)})")
-            res = self.pre_order(node.left)
-            res = self.pre_order(node.right)
-        return res
+            print(f"{str(node.value)}({str(node.count)})", end=" - ")
+            self.pre_order(node.left)
+            self.pre_order(node.right)
 
 
-    def post_order(self, node, res=[]):
+    def post_order(self, node):
         # left -> right -> root
         if node:
-            res = self.post_order(node.left, res)
-            res = self.post_order(node.right, res)
-            res.append(f"{str(node.value)}({str(node.count)})")
-        return res
+            self.post_order(node.left)
+            self.post_order(node.right)
+            print(f"{str(node.value)}({str(node.count)})", end=" - ")
 
 
     def level_order(self):
@@ -132,9 +123,6 @@ class BST:
 
             curr_level_nodes = next_level_nodes
 
-    def __str__(self):
-        return ' - '.join(self.traversals())
-
 
 # Driver code
 bst = BST()
@@ -153,17 +141,14 @@ bst.insert(16)
 bst.insert(119)
 bst.insert(13)
 
-print("In Order")
-print(bst)
-print("-----------------------")
-print("Pre Order")
-print(' - '.join(bst.pre_order(bst.root)))
-print("-----------------------")
-print("Post Order")
-print(' - '.join(bst.post_order(bst.root)))
-print("-----------------------")
-print("Level Order")
-for level_nodes in bst.level_order():
-    for node in level_nodes:
-        print(f"{node.value}({node.count})", end=" ")
-    print("\n") 
+print("IN ORDER")
+bst.in_order(bst.root)
+# print("\n--------------------")
+# print("PRE ORDER")
+# bst.pre_order(bst.root)
+# print("\n--------------------")
+# print("POST ORDER")
+# bst.post_order(bst.root)
+print("\n--------------------")
+bst.remove(10)
+bst.in_order(bst.root)
