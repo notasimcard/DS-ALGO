@@ -1,9 +1,12 @@
 """
 Quicksort Implementation
 - Most language uses quicksort for its sorting
-- Average time complexity: O(nlog(n))
-- Worst case: O(n^2)
-- Space Complexity: O(1), inplace algorithm
+- Time complexity: Average case: O(nlog(n)), Worst case: O(n^2)
+- Space Complexity: Average case: O(log(n)), Worst case: O(n)
+- Quicksort calls itself on the order of log(n) times 
+    (in the average case, worst case number of calls is O(n)), 
+    at each recursive call a new stack frame of constant size must be allocated. 
+    Hence the O(log(n)) space complexity.
 - We can have O(nlog(n)) with high probability if we use randomized version
     of quicksort
 - Not stable, https://www.geeksforgeeks.org/stability-in-sorting-algorithms/
